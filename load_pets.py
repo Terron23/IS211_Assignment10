@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """IS211 Assignment10 - sqlite3 load_pets.py"""
 
 import sqlite3

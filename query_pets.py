@@ -8,26 +8,26 @@ try:
     con.row_factory = sqlite3.Row
 
     while True:
-        personselect = raw_input('\nPlease enter a Person ID number between 1-4 or enter -1 to exit: \n')
+        person = raw_input('\nPlease enter a Person ID number between 1-4 or enter -1 to exit: \n')
 
-        if personselect == '-1':
+        if person == '-1':
             print ('\nYou have entered -1, the program will now exit.\n')
             break
         
         else:
             try:
-                personselect = int(personselect)
+                person = int(person)
 
             except:
-                print '\nInvalid entry!  Please enter ID number from 1 - 4.\n'
+                print '\nInvalid!  Please enter ID number from 1 - 4.\n'
                 continue
 
         cur = con.cursor()
-        cur.execute('SELECT * FROM person WHERE id =?', [(personselect)])
+        cur.execute('SELECT * FROM person WHERE id =?', [(person)])
         row = cur.fetchone()
 
         if row == None:
-            print 'The ID you have entered is invalid, please select person id 1-4.'
+            print 'The ID you have entered is invalid, please select id 1-4.'
             continue
 
         print row['first_name'] + ' ' + row['last_name'] + ' is ' + str(
@@ -35,10 +35,10 @@ try:
 
 
         for row in con.execute(
-            "SELECT * FROM person_pet WHERE person_id =?", [(personselect)]):
+            "SELECT * FROM person_pet WHERE person_id =?", [(person)]):
 
             for name in con.execute(
-                "SELECT * FROM person WHERE id =?", [(personselect)]):
+                "SELECT * FROM person WHERE id =?", [(person)]):
                 pet_owner = name['first_name'] + ' ' + name['last_name']
 
 
@@ -56,7 +56,6 @@ try:
                             row_pet['age']) + ' years old.\n')
 
 except sqlite3.Error as e:
-    print "Closing."
     print "Error: %s " % e.args[0]
     sys.exit(1)
 
