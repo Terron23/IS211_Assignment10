@@ -4,7 +4,7 @@ import sqlite3
 import sys
 con = None
 
-mysql = """
+sql = """
         DROP TABLE IF EXISTS person;
         DROP TABLE IF EXISTS pet;
         DROP TABLE IF EXISTS person_pet;
@@ -35,15 +35,15 @@ mysql = """
 try:
     con = sqlite3.connect('pets.db')
     cur = con.cursor()
-    cur.executescript(mysql)
+    cur.executescript(sql)
     con.commit()
 
-except sqlite3.Error, e: 
+except e: 
 
     if con:
         con.rollback()
 
-    print "Error %s:" % e.args[0]
+    print("Error %s:" % e.args[0])
     sys.exit(1)
 
 finally:

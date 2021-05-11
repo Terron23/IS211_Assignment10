@@ -6,9 +6,10 @@ con = None
 try:
     con = sqlite3.connect('pets.db')
     con.row_factory = sqlite3.Row
+    print(con.total_changes)
 
     while True:
-        person = raw_input('\nPlease enter a Person ID number between 1-4 or enter -1 to exit: \n')
+        person = input('\nPlease enter a Person ID number between 1-4 or enter -1 to exit: \n')
 
         if person == '-1':
             print ('\nYou have entered -1, the program will now exit.\n')
@@ -19,7 +20,7 @@ try:
                 person = int(person)
 
             except:
-                print '\nInvalid!  Please enter ID number from 1 - 4.\n'
+                print ('\nInvalid!  Please enter ID number from 1 - 4.\n')
                 continue
 
         cur = con.cursor()
@@ -27,11 +28,11 @@ try:
         row = cur.fetchone()
 
         if row == None:
-            print 'The ID you have entered is invalid, please select id 1-4.'
+            print('The ID you have entered is invalid, please select id 1-4.')
             continue
 
-        print row['first_name'] + ' ' + row['last_name'] + ' is ' + str(
-            row['age']) + ' yrs old.\n'
+        print(row['first_name'] + ' ' + row['last_name'] + ' is ' + str(
+            row['age']) + ' yrs old.\n')
 
 
         for row in con.execute(
@@ -56,7 +57,7 @@ try:
                             row_pet['age']) + ' years old.\n')
 
 except sqlite3.Error as e:
-    print "Error: %s " % e.args[0]
+    print("Error: %s " % e.args[0])
     sys.exit(1)
 
 finally:
